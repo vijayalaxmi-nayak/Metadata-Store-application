@@ -1,6 +1,7 @@
 class Media < ApplicationRecord
     belongs_to :account
     has_one :metadata, dependent: :destroy
+    
     validates :asset_id, presence:true,uniqueness:true
     validate :account_id_exists
 
