@@ -4,7 +4,7 @@ module Api
         class MetadatasController < MediasController
 
             def create
-                #params[:file].path
+                
                 print "entered\n"
                 Metadata.delete_all
                 saved=[]

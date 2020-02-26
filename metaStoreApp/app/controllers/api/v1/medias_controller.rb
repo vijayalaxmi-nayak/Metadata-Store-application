@@ -32,6 +32,7 @@ module Api
                 params.permit(:asset_id,:title,:duration,:location,:recorded_time,:account_id)
             end
 
+        
         end
     end
 end

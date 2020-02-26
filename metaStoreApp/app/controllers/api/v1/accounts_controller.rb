@@ -26,6 +26,7 @@ module Api
                 end 
             end
 
+            
             def destroy
                 account = Account.find(params[:id])
                 account.destroy
