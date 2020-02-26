@@ -3,6 +3,12 @@ Rails.application.routes.draw do
   namespace 'api' do
     namespace 'v1' do
       resources :accounts
+      resources :medias
+      resources :metadatas
+
+      get '/showmedia/:id', to: 'accounts#showmedia'
+      get '/showmedia_code/:id', to:'accounts#showmedia_code'
+      #get '/addcsv/:fileid',to: 'metadatas#addcsv'
     end
   end
 end

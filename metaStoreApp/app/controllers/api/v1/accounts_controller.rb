@@ -14,7 +14,11 @@ module Api
 
             def create
                 account = Account.new(params_account)
-
+                print "\n--------------------------------\n"
+                print params_account
+                print "\n--------------------------------\n"
+                print account
+                print "\n--------------------------------\n"
                 if account.save
                     render json: {status: 'SUCCESS', message:'Saved account', data: account}, status: :ok 
                 else
@@ -35,6 +39,18 @@ module Api
                 else
                     render json: {status: 'ERROR', message:'Account not updated', data: account.errors}, status: :unprocessable_entity
                 end
+            end
+
+            def showmedia
+                account = Account.find(params[:id])
+                medias = account.medias.all
+                render json: {status: 'SUCCESS', message:'Loaded media', data: medias}, status: :ok 
+            end
+
+            def showmedia_code
+                account = Account.find_by_code(params[:id])
+                medias = account.medias.all
+                render json: {status: 'SUCCESS', message:'Loaded media', data: medias}, status: :ok 
             end
 
             private def params_account
