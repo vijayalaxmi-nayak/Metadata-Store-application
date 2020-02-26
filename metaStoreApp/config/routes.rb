@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       resources :metadatas
 
       get '/showmedia/:id', to: 'accounts#showmedia'
+      get '/showmedia_code/:id', to:'accounts#showmedia_code'
       #get '/addcsv/:fileid',to: 'metadatas#addcsv'
     end
   end

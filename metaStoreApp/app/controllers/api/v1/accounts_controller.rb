@@ -47,6 +47,12 @@ module Api
                 render json: {status: 'SUCCESS', message:'Loaded media', data: medias}, status: :ok 
             end
 
+            def showmedia_code
+                account = Account.find_by_code(params[:id])
+                medias = account.medias.all
+                render json: {status: 'SUCCESS', message:'Loaded media', data: medias}, status: :ok 
+            end
+
             private def params_account
                 params.permit(:code,:name,:password)
             end

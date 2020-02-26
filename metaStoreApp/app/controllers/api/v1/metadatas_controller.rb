@@ -3,11 +3,6 @@ module Api
         require 'csv'
         class MetadatasController < MediasController
 
-            def add_data
-                metadata = Metadata.new(params_metadata)
-                metadata.save
-            end
-
             def create
                 #params[:file].path
                 print "entered\n"
@@ -32,10 +27,7 @@ module Api
             
             end
 
-            private def params_metadata1
-                params.permit(:media_id,:title,:duration,:location,:recorded_time)
-            end
-            
+           
 
         end
     end
