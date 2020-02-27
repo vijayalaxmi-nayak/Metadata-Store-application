@@ -20,9 +20,9 @@ ActiveRecord::Schema.define(version: 2020_02_25_121515) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "media", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "asset_id"
+  create_table "media", primary_key: "asset_id", id: :string, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "account_id"
+    t.string "media_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id"], name: "index_media_on_account_id"
@@ -31,9 +31,10 @@ ActiveRecord::Schema.define(version: 2020_02_25_121515) do
   create_table "metadata", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "media_id"
     t.string "title"
-    t.time "duration"
+    t.bigint "duration"
     t.string "location"
     t.datetime "recorded_time"
+    t.string "timecode"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

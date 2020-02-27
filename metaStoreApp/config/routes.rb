@@ -5,10 +5,11 @@ Rails.application.routes.draw do
       resources :accounts
       resources :medias
       resources :metadatas
-
-      get '/showmedia/:id', to: 'accounts#showmedia'
-      get '/showmedia_code/:id', to:'accounts#showmedia_code'
+      resources :audios
+      resources :videos
       
+      get '/show_media/:id', to:'accounts#show_media'
+      get '/show_media_by_code/:id', to:'accounts#show_media_by_code'
     end
   end
 end
