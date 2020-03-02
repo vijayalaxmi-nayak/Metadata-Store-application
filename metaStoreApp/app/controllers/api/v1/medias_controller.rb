@@ -14,6 +14,16 @@ module Api
         @@media = Media.new(params_media)
       end
 
+      # shows a specfic media based on asset_id
+      def show
+        @@media = Media.find_by_asset_id(params[:id])
+        if @@media == nil
+          render json: { status: 'NOT FOUND', message: 'Desired asset_id of Media does not exists' }, status: :ok
+        else
+          render json: { status: 'SUCCESS', message: 'Loaded Media', data: @@media }, status: :ok
+        end
+      end
+
       # deletes a specific media based on asset_id
       def destroy
         @@del_media = Media.find_by_asset_id(params[:id])
