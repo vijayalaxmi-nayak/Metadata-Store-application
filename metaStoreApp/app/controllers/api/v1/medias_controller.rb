@@ -8,6 +8,7 @@ module Api
         @@medias = Media.where(nil)
         @@medias = @@medias.filter_by_asset_id(params[:asset_id]) if params[:asset_id].present?
         @@medias = @@medias.filter_by_title(params[:title]) if params[:title].present?
+        @@medias = @@medias.filter_by_duration(params[:duration]) if params[:duration].present?
         if @@medias == []
           render json: { status: 'NOT FOUND', message: 'Desired media file does not exists' }, status: :ok
         else
