@@ -1,23 +1,48 @@
 module Api
   module V1
     class MediasController < AccountsController
+      require 'csv'
+
+      # displays all the medias
       def index
         @@medias = Media.all
         render json: { status: 'SUCCESS', message: 'Loaded medias', data: @@medias }, status: :ok 
       end
 
-      def show
-        @@media = Media.find(params[:id])
-        render json: { status: 'SUCCESS', message: 'Loaded media', data: @@media }, status: :ok 
-      end
-
+      # creates a new media
       def create
         @@media = Media.new(params_media)
       end
 
+      # deletes a specific media based on asset_id
       def destroy
         @@del_media = Media.find_by_asset_id(params[:id])
         @@del_media.destroy
+      end
+      
+      # uploads the metadata submitted by user via .csv file
+      def update   
+        saved = []
+        unsaved = [] 
+        CSV.foreach(params[:id], headers: true) do |row|
+          hash_value = row.to_hash
+          if Media.exists? asset_id: hash_value["asset_id"]
+            type = Media.where(asset_id: hash_value["asset_id"]).pluck(:media_type)[0]
+            if type == "audio"
+              hash_value["timecode"] = Audio.duration_tc((hash_value["duration"]).to_i)
+            elsif type == "video"
+              hash_value["timecode"] = Video.duration_tc((hash_value["duration"]).to_i)
+            end
+            @metadata = Media.find_by_asset_id(hash_value["asset_id"])
+            if @metadata.update_attributes(hash_value)
+              saved.append(hash_value)   
+            end
+          else
+            unsaved.append(hash_value)
+          end
+        end
+        render json: { status: 'SUCCESS', message: 'Loaded metadata', saved_data: saved, 
+        unsaved_data: unsaved }, status: :ok 
       end
 
       private 

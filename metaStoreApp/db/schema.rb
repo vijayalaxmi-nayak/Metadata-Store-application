@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_25_121515) do
+ActiveRecord::Schema.define(version: 2020_02_29_142801) do
 
   create_table "accounts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "code"
@@ -21,22 +21,16 @@ ActiveRecord::Schema.define(version: 2020_02_25_121515) do
   end
 
   create_table "media", primary_key: "asset_id", id: :string, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "account_id"
     t.string "media_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["account_id"], name: "index_media_on_account_id"
-  end
-
-  create_table "metadata", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "media_id"
+    t.bigint "account_id"
     t.string "title"
-    t.bigint "duration"
+    t.integer "duration", default: 0
     t.string "location"
     t.datetime "recorded_time"
     t.string "timecode"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_media_on_account_id"
   end
 
 end
