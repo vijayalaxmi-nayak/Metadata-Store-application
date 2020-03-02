@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_28_071518) do
+ActiveRecord::Schema.define(version: 2020_02_29_142801) do
 
   create_table "accounts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "code"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 2020_02_28_071518) do
     t.string "media_type"
     t.bigint "account_id"
     t.string "title"
-    t.integer "duration"
+    t.integer "duration", default: 0
     t.string "location"
     t.datetime "recorded_time"
     t.string "timecode"
