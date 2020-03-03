@@ -7,10 +7,10 @@ Rails.application.routes.draw do
       resources :medias
       resources :audios
       resources :videos
-      
-      get '/show_media/:id', to:'accounts#show_media'
-      get '/show_media_by_code/:id', to:'accounts#show_media_by_code'
-      put '/medias/', to:'medias#update'
+
+      get '/show_media/:id', to: 'accounts#show_media'
+      get '/show_media_by_code/:id', to: 'accounts#show_media_by_code'
+      put '/medias/', to: 'medias#update'
     end
   end
 end

@@ -11,6 +11,6 @@ class CreateMedia < ActiveRecord::Migration[5.2]
       t.string :timecode
       t.timestamps
     end
-    execute "ALTER TABLE media ADD PRIMARY KEY (asset_id);"
+    execute 'ALTER TABLE media ADD PRIMARY KEY (asset_id);'
   end
 end

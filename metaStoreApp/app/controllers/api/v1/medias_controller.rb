@@ -4,10 +4,10 @@ module Api
       require 'csv'
 
       # displays the medias based on filters
-      api :GET, '/medias/', "Displays medias based on filters"
-      param :asset_id, String, :desc => "Asset Id"
-      param :title, String, :desc => "Title of the media"
-      param :duration, :number, :desc => "Duration of the media in milliseconds"
+      api :GET, '/medias/', 'Displays medias based on filters'
+      param :asset_id, String, desc: 'Asset Id'
+      param :title, String, desc: 'Title of the media'
+      param :duration, :number, desc: 'Duration of the media in milliseconds'
       example %(
       Filter by asset_id
       GET api/v1/medias?asset_id=AB100
@@ -85,31 +85,37 @@ module Api
       }
       )
       def index
-        @@medias = Media.where(nil)
+        @medias = Media.where(nil)
         # search by asset_id
-        @@medias = @@medias.filter_by_asset_id(params[:asset_id]) if params[:asset_id].present?
+        @medias = @medias.filter_by_asset_id(params[:asset_id]) if
+params[:asset_id].present?
         # search by title
-        @@medias = @@medias.filter_by_title(params[:title]) if params[:title].present?
+        @medias = @medias.filter_by_title(params[:title]) if
+params[:title].present?
         # filter by duration
-        @@medias = @@medias.filter_by_duration(params[:duration]) if params[:duration].present?
+        @medias = @medias.filter_by_duration(params[:duration]) if
+params[:duration].present?
         # sort by created_at
-        @@medias = @@medias.order('created_at')
-        if @@medias == []
-          render json: { status: 'NOT FOUND', message: 'Desired media file does not exists' }, status: :ok
+        @medias = @medias.order('created_at')
+        if @medias == []
+          render json: { status: 'NOT FOUND', message: 'Desired media file does
+not exists' }, status: :ok
         else
-          render json: { status: 'SUCCESS', message: 'Loaded medias', data: @@medias }, status: :ok
+          render json: { status: 'SUCCESS', message: 'Loaded medias', data:
+@medias }, status: :ok
         end
       end
 
       # creates a new media
-      api :POST, '/medias/', "Creates a new media"
-      param :asset_id, String, :desc => "Asset Id", :required => true
-      param :media_type, String, :desc => "Media Type(Audio or Video)", :required => true
-      param :account_id, String, :desc => "Account Id", :required => true
-      param :title, String, :desc => "Title of the media"
-      param :duration, :number, :desc => "Duration of the media in milliseconds"
-      param :location, String, :desc => "File location where the media is stored"
-      param :recorded_time, String, :desc => "Recorded time of the media"
+      api :POST, '/medias/', 'Creates a new media'
+      param :asset_id, String, desc: 'Asset Id', required: true
+      param :media_type, String, desc: 'Media Type(Audio or Video)', required:
+true
+      param :account_id, String, desc: 'Account Id', required: true
+      param :title, String, desc: 'Title of the media'
+      param :duration, :number, desc: 'Duration of the media in milliseconds'
+      param :location, String, desc: 'File location where the media is stored'
+      param :recorded_time, String, desc: 'Recorded time of the media'
       example %(
       POST api/v1/medias
       {
@@ -137,21 +143,24 @@ module Api
       }
       )
       def create
-        @@media = Media.new(params_media)
-        if (@@media.save)
-          if @@media.media_type == "audio"
-            render json: { status: 'SUCCESS', message: 'saved audio', data: @@media }, status: :ok
+        @media = Media.new(params_media)
+        if @media.save
+          if @media.media_type == 'audio'
+            render json: { status: 'SUCCESS', message: 'saved audio', data:
+@media }, status: :ok
           else
-            render json: { status: 'SUCCESS', message: 'saved video', data: @@media }, status: :ok
+            render json: { status: 'SUCCESS', message: 'saved video', data:
+@media }, status: :ok
           end
         else
-          render json: { status: 'ERROR', message: 'failed to save media', data: @@media.errors }, status: :unprocessable_entity
+          render json: { status: 'ERROR', message: 'failed to save media', data:
+@media.errors }, status: :unprocessable_entity
         end
       end
 
       # shows a specfic media based on asset_id
-      api :GET, '/medias/:id', "Displays a specific media based on asset_id"
-      param :id, String, :desc => "Asset Id"
+      api :GET, '/medias/:id', 'Displays a specific media based on asset_id'
+      param :id, String, desc: 'Asset Id'
       example %(
       GET api/v1/medias/AA100
       {
@@ -172,17 +181,19 @@ module Api
       }
       )
       def show
-        @@media = Media.find_by_asset_id(params[:id])
-        if @@media == nil
-          render json: { status: 'NOT FOUND', message: 'Desired asset_id of Media does not exists' }, status: :ok
+        @media = Media.find_by_asset_id(params[:id])
+        if @media.nil?
+          render json: { status: 'NOT FOUND', message: 'Desired asset_id of
+Media does not exists' }, status: :ok
         else
-          render json: { status: 'SUCCESS', message: 'Loaded Media', data: @@media }, status: :ok
+          render json: { status: 'SUCCESS', message: 'Loaded Media', data:
+@media }, status: :ok
         end
       end
 
       # deletes a specific media based on asset_id
-      api :DELETE, '/medias/:id', "Deletes a specific media based on asset_id"
-      param :asset_id, String, :desc => "Asset Id"
+      api :DELETE, '/medias/:id', 'Deletes a specific media based on asset_id'
+      param :asset_id, String, desc: 'Asset Id'
       example %(
       DELETE api/v1/medias/AH100
       {
@@ -203,25 +214,26 @@ module Api
       }
       )
       def destroy
-        @@del_media = Media.find_by_asset_id(params[:id])
-        @@del_media.destroy
-        render json: { status: 'SUCCESS', message: 'Deleted media', data: @@del_media }, status: :ok
+        @del_media = Media.find_by_asset_id(params[:id])
+        @del_media.destroy
+        render json: { status: 'SUCCESS', message: 'Deleted media', data:
+@del_media }, status: :ok
       end
-      
+
       # uploads the metadata submitted by user via .csv file
-      api :PUT, '/medias/', "Updates the metadata of media"
-      param :asset_id, String, :desc => "Asset Id"
-      param :title, String, :desc => "Title of the media"
-      param :duration, :number, :desc => "Duration of the media in milliseconds"
-      param :location, String, :desc => "File location where the media is stored"
-      param :recorded_time, String, :desc => "Recorded time of the media"
+      api :PUT, '/medias/', 'Updates the metadata of media'
+      param :asset_id, String, desc: 'Asset Id'
+      param :title, String, desc: 'Title of the media'
+      param :duration, :number, desc: 'Duration of the media in milliseconds'
+      param :location, String, desc: 'File location where the media is stored'
+      param :recorded_time, String, desc: 'Recorded time of the media'
       example %(
       PUT api/v1/medias/
       Input:
       {
       "id":"/home/amagi/Desktop/meta.csv"
       }
-      
+
       Server response:
       {
       "status": "SUCCESS",
@@ -255,33 +267,36 @@ module Api
       ]
       }
       )
-      def update   
+      def update
         saved = []
-        unsaved = [] 
+        unsaved = []
         CSV.foreach(params[:id], headers: true) do |row|
           # byebug
           hash_value = row.to_hash
-          if Media.exists? asset_id: hash_value["asset_id"]
-            type = Media.where(asset_id: hash_value["asset_id"]).pluck(:media_type)[0]
-            if type == "audio"
-              hash_value["timecode"] = Audio.duration_tc((hash_value["duration"]).to_i)
-            elsif type == "video"
-              hash_value["timecode"] = Video.duration_tc((hash_value["duration"]).to_i)
+          if Media.exists? asset_id: hash_value['asset_id']
+            type = Media.where(asset_id:
+hash_value['asset_id']).pluck(:media_type)[0]
+            if type == 'audio'
+              hash_value['timecode'] =
+Audio.duration_tc(hash_value['duration'].to_i)
+            elsif type == 'video'
+              hash_value['timecode'] =
+Video.duration_tc(hash_value['duration'].to_i)
             end
-            @metadata = Media.find_by_asset_id(hash_value["asset_id"])
+            @metadata = Media.find_by_asset_id(hash_value['asset_id'])
             if @metadata.update_attributes(hash_value)
-              saved.append(hash_value)   
+              saved.append(hash_value)
             end
           else
             unsaved.append(hash_value)
           end
         end
-        render json: { status: 'SUCCESS', message: 'Loaded metadata', saved_data: saved, 
-        unsaved_data: unsaved }, status: :ok 
+        render json: { status: 'SUCCESS', message: 'Loaded metadata',
+saved_data: saved, unsaved_data: unsaved }, status: :ok
       end
 
-      private 
-      
+      private
+
       def params_media
         params.permit(:asset_id, :account_id, :media_type)
       end
