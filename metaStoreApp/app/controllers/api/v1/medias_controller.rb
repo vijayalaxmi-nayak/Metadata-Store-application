@@ -112,15 +112,41 @@ module Api
       param :recorded_time, String, :desc => "Recorded time of the media"
       example %(
       POST api/v1/medias
-      Input:
       {
-      "asset_id":"C100",
-      "media_type":"video",
+      "asset_id":"AH100",
+      "media_type":"audio",
       "account_id":"2"
+      }
+
+      Server response:
+      {
+      "status": "SUCCESS",
+      "message": "saved audio",
+      "data": {
+        "asset_id": "AH100",
+        "media_type": "audio",
+        "account_id": 2,
+        "title": null,
+        "duration": 0,
+        "location": null,
+        "recorded_time": null,
+        "timecode": null,
+        "created_at": "2020-03-02T11:27:56.000Z",
+        "updated_at": "2020-03-02T11:27:56.000Z"
+      }
       }
       )
       def create
         @@media = Media.new(params_media)
+        if (@@media.save)
+          if @@media.media_type == "audio"
+            render json: { status: 'SUCCESS', message: 'saved audio', data: @@media }, status: :ok
+          else
+            render json: { status: 'SUCCESS', message: 'saved video', data: @@media }, status: :ok
+          end
+        else
+          render json: { status: 'ERROR', message: 'failed to save media', data: @@media.errors }, status: :unprocessable_entity
+        end
       end
 
       # shows a specfic media based on asset_id
@@ -157,10 +183,29 @@ module Api
       # deletes a specific media based on asset_id
       api :DELETE, '/medias/:id', "Deletes a specific media based on asset_id"
       param :asset_id, String, :desc => "Asset Id"
-      example %(DELETE api/v1/medias/AC100)
+      example %(
+      DELETE api/v1/medias/AH100
+      {
+      "status": "SUCCESS",
+      "message": "Deleted media",
+      "data": {
+        "asset_id": "AH100",
+        "media_type": "audio",
+        "account_id": 2,
+        "title": null,
+        "duration": 0,
+        "location": null,
+        "recorded_time": null,
+        "timecode": null,
+        "created_at": "2020-03-02T11:27:56.000Z",
+        "updated_at": "2020-03-02T11:27:56.000Z"
+      }
+      }
+      )
       def destroy
         @@del_media = Media.find_by_asset_id(params[:id])
         @@del_media.destroy
+        render json: { status: 'SUCCESS', message: 'Deleted media', data: @@del_media }, status: :ok
       end
       
       # uploads the metadata submitted by user via .csv file
