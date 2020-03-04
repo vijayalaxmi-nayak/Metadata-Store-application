@@ -9,22 +9,22 @@ module Api
       "status": "SUCCESS",
       "message": "Loaded accounts",
       "data": [
-	{
-	  "id": 1,
-	  "code": "PQR100",
-	  "name": "Account1",
-	  "password": "Account1",
-	  "created_at": "2020-02-25T14:00:01.000Z",
-	  "updated_at": "2020-02-25T14:08:55.000Z"
-	},
-	{
-	  "id": 2,
-	  "code": "XYZ100",
-	  "name": "Account2",
-	  "password": "Account2",
-	  "created_at": "2020-02-25T14:00:19.000Z",
-	  "updated_at": "2020-02-25T14:00:19.000Z"
-	}
+        {
+          "id": 1,
+          "code": "PQR100",
+          "name": "Account1",
+          "password": "Account1",
+          "created_at": "2020-02-25T14:00:01.000Z",
+          "updated_at": "2020-02-25T14:08:55.000Z"
+        },
+        {
+          "id": 2,
+          "code": "XYZ100",
+          "name": "Account2",
+          "password": "Account2",
+          "created_at": "2020-02-25T14:00:19.000Z",
+          "updated_at": "2020-02-25T14:00:19.000Z"
+        }
       ]
       }
       )
@@ -43,12 +43,12 @@ module Api
       "status": "SUCCESS",
       "message": "Loaded account",
       "data": {
-	"id": 1,
-	"code": "PQR100",
-	"name": "Account1",
-	"password": "Account1",
-	"created_at": "2020-02-25T14:00:01.000Z",
-	"updated_at": "2020-02-25T14:08:55.000Z"
+        "id": 1,
+        "code": "PQR100",
+        "name": "Account1",
+        "password": "Account1",
+        "created_at": "2020-02-25T14:00:01.000Z",
+        "updated_at": "2020-02-25T14:08:55.000Z"
       }
       }
       )
@@ -77,12 +77,12 @@ account }, status: :ok
       "status": "SUCCESS",
       "message": "Saved account",
       "data": {
-	"id": 14,
-	"code": "SDA100",
-	"name": "Account11",
-	"password": "Account11",
-	"created_at": "2020-03-02T10:24:09.000Z",
-	"updated_at": "2020-03-02T10:24:09.000Z"
+        "id": 14,
+        "code": "SDA100",
+        "name": "Account11",
+        "password": "Account11",
+        "created_at": "2020-03-02T10:24:09.000Z",
+        "updated_at": "2020-03-02T10:24:09.000Z"
       }
       }
       )
@@ -106,12 +106,12 @@ account.errors }, status: :unprocessable_entity
       "status": "SUCCESS",
       "message": "Deleted account",
       "data": {
-	"id": 14,
-	"code": "SDA100",
-	"name": "Account11",
-	"password": "Account11",
-	"created_at": "2020-03-02T10:24:09.000Z",
-	"updated_at": "2020-03-02T10:24:09.000Z"
+        "id": 14,
+        "code": "SDA100",
+        "name": "Account11",
+        "password": "Account11",
+        "created_at": "2020-03-02T10:24:09.000Z",
+        "updated_at": "2020-03-02T10:24:09.000Z"
       }
       }
       )
@@ -142,12 +142,12 @@ account }, status: :ok
       "status": "SUCCESS",
       "message": "Updated account",
       "data": {
-	"id": 13,
-	"code": "SDA100",
-	"name": "Account13",
-	"password": "Account13",
-	"created_at": "2020-02-28T09:15:52.000Z",
-	"updated_at": "2020-03-02T10:33:47.000Z"
+        "id": 13,
+        "code": "SDA100",
+        "name": "Account13",
+        "password": "Account13",
+        "created_at": "2020-02-28T09:15:52.000Z",
+        "updated_at": "2020-03-02T10:33:47.000Z"
       }
       }
       )
@@ -173,28 +173,28 @@ specific account based on id'
       "message": "Loaded media",
       "data": [
       {
-	"asset_id": "AB100",
-	"media_type": "audio",
-	"account_id": 2,
-	"title": null,
-	"duration": null,
-	"location": null,
-	"recorded_time": null,
-	"timecode": null,
-	"created_at": "2020-02-28T09:12:47.000Z",
-	"updated_at": "2020-02-28T09:12:47.000Z"
+        "asset_id": "AB100",
+        "media_type": "audio",
+        "account_id": 2,
+        "title": null,
+        "duration": null,
+        "location": null,
+        "recorded_time": null,
+        "timecode": null,
+        "created_at": "2020-02-28T09:12:47.000Z",
+        "updated_at": "2020-02-28T09:12:47.000Z"
       },
       {
-	"asset_id": "AC100",
-	"media_type": "audio",
-	"account_id": 2,
-	"title": null,
-	"duration": null,
-	"location": null,
-	"recorded_time": null,
-	"timecode": null,
-	"created_at": "2020-02-28T09:49:48.000Z",
-	"updated_at": "2020-02-28T09:49:48.000Z"
+        "asset_id": "AC100",
+        "media_type": "audio",
+        "account_id": 2,
+        "title": null,
+        "duration": null,
+        "location": null,
+        "recorded_time": null,
+        "timecode": null,
+        "created_at": "2020-02-28T09:49:48.000Z",
+        "updated_at": "2020-02-28T09:49:48.000Z"
       }
       ]
       }
@@ -218,28 +218,28 @@ specific account based on code'
       "message": "Loaded media",
       "data": [
       {
-	"asset_id": "AB100",
-	"media_type": "audio",
-	"account_id": 2,
-	"title": null,
-	"duration": null,
-	"location": null,
-	"recorded_time": null,
-	"timecode": null,
-	"created_at": "2020-02-28T09:12:47.000Z",
-	"updated_at": "2020-02-28T09:12:47.000Z"
+        "asset_id": "AB100",
+        "media_type": "audio",
+        "account_id": 2,
+        "title": null,
+        "duration": null,
+        "location": null,
+        "recorded_time": null,
+        "timecode": null,
+        "created_at": "2020-02-28T09:12:47.000Z",
+        "updated_at": "2020-02-28T09:12:47.000Z"
       },
       {
-	"asset_id": "AC100",
-	"media_type": "audio",
-	"account_id": 2,
-	"title": null,
-	"duration": null,
-	"location": null,
-	"recorded_time": null,
-	"timecode": null,
-	"created_at": "2020-02-28T09:49:48.000Z",
-	"updated_at": "2020-02-28T09:49:48.000Z"
+        "asset_id": "AC100",
+        "media_type": "audio",
+        "account_id": 2,
+        "title": null,
+        "duration": null,
+        "location": null,
+        "recorded_time": null,
+        "timecode": null,
+        "created_at": "2020-02-28T09:49:48.000Z",
+        "updated_at": "2020-02-28T09:49:48.000Z"
       }
       ]
       }
