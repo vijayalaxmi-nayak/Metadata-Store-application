@@ -98,6 +98,11 @@ params[:title].present?
 params[:duration].present?
         # sort by created_at
         medias = medias.order('created_at')
+        # applying limit and offset
+        # limit = 10
+        # default offset is 0
+        offset = params[:offset] if params[:offset].present?
+        medias = medias.offset(offset).limit(10)
         if medias == []
           render json: { status: 'NOT FOUND', message: 'Desired media file does
 not exists' }, status: :ok
