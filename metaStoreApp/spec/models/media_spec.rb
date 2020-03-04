@@ -26,8 +26,47 @@ being integer' do
     it 'should create a media record on validation success' do
       metadata = FactoryBot.build(:media, account_id: @account.id)
       status = metadata.save
-      # byebug
       expect(status).to eq(true)
+    end
+  end
+
+  context 'testcases for display medias based on searches and filters' do
+    it 'should search by asset_id if only asset_id param is passed' do
+      for i in 1..10 do
+	FactoryBot.create(:media, account_id: @account.id, asset_id: i.to_s +
+'100')
+      end
+      metadata = Media.search_by_asset_id('2')
+      expect(metadata.pluck(:asset_id)[0]).to eq('2100')
+    end
+
+    it 'should search by title if only title param is passed' do
+      for i in 1..3 do
+	FactoryBot.create(:media, account_id: @account.id, title: i.to_s +
+'xYz', asset_id: i.to_s + 'xyz')
+      end
+      for i in 1..3 do
+	FactoryBot.create(:media, account_id: @account.id, title: i.to_s +
+'Xav', asset_id: i.to_s + 'abc')
+      end
+      metadata = Media.search_by_title('XYZ')
+      expect(metadata.pluck(:title)).to eq(["1xYz", "2xYz", "3xYz"])
+    end
+
+    it 'should search by asset_id, title, and duration if all three params are
+provided' do
+      for i in 60..65 do
+	FactoryBot.create(:media, account_id: @account.id, title: i.to_s +
+'xYz', asset_id: i.to_s + 'abc', duration: i)
+      end
+      for i in 60..65 do
+	FactoryBot.create(:media, account_id: @account.id, title: i.to_s +
+'Abc', asset_id: i.to_s + 'xyz', duration: i)
+      end
+      metadata = Media.search_by_asset_id('AbC')
+      metadata = metadata.search_by_title('xy')
+      metadata = metadata.search_by_duration(62)
+      expect(metadata.pluck(:asset_id)).to eq(["60abc", "61abc", "62abc"])
     end
   end
 end
