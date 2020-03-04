@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Audio < Media
   # duration_tc() method converts the duration given in milliseconds to timecode
   # in milliseconds

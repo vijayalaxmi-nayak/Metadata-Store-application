@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Api
   module V1
     class MediasController < AccountsController
@@ -9,7 +10,7 @@ module Api
       param :title, String, desc: 'Title of the media'
       param :duration, :number, desc: 'Duration of the media in milliseconds'
       example %(
-      Filter by asset_id
+      Search by asset_id
       GET api/v1/medias?asset_id=AB100
       {
       "status": "SUCCESS",
@@ -30,7 +31,7 @@ module Api
       ]
       }
 
-      Filter by title
+      Search by title
       GET api/v1/medias/?title=song4
       {
       "status": "SUCCESS",
@@ -51,7 +52,7 @@ module Api
       ]
       }
 
-      Filter by duration
+      Search by duration
       GET api/v1/medias?duration=12090
       {
       "status": "SUCCESS",
@@ -85,24 +86,24 @@ module Api
       }
       )
       def index
-        @medias = Media.where(nil)
+        medias = Media.where(nil)
         # search by asset_id
-        @medias = @medias.filter_by_asset_id(params[:asset_id]) if
+        medias = medias.search_by_asset_id(params[:asset_id]) if
 params[:asset_id].present?
         # search by title
-        @medias = @medias.filter_by_title(params[:title]) if
+        medias = medias.search_by_title(params[:title]) if
 params[:title].present?
-        # filter by duration
-        @medias = @medias.filter_by_duration(params[:duration]) if
+        # search by duration
+        medias = medias.search_by_duration(params[:duration]) if
 params[:duration].present?
         # sort by created_at
-        @medias = @medias.order('created_at')
-        if @medias == []
+        medias = medias.order('created_at')
+        if medias == []
           render json: { status: 'NOT FOUND', message: 'Desired media file does
 not exists' }, status: :ok
         else
           render json: { status: 'SUCCESS', message: 'Loaded medias', data:
-@medias }, status: :ok
+medias }, status: :ok
         end
       end
 
@@ -143,18 +144,18 @@ true
       }
       )
       def create
-        @media = Media.new(params_media)
-        if @media.save
-          if @media.media_type == 'audio'
+        media = Media.new(params_media)
+        if media.save
+          if media.media_type == 'audio'
             render json: { status: 'SUCCESS', message: 'saved audio', data:
-@media }, status: :ok
+media }, status: :ok
           else
             render json: { status: 'SUCCESS', message: 'saved video', data:
-@media }, status: :ok
+media }, status: :ok
           end
         else
           render json: { status: 'ERROR', message: 'failed to save media', data:
-@media.errors }, status: :unprocessable_entity
+media.errors }, status: :unprocessable_entity
         end
       end
 
@@ -181,13 +182,13 @@ true
       }
       )
       def show
-        @media = Media.find_by_asset_id(params[:id])
-        if @media.nil?
+        media = Media.find_by_asset_id(params[:id])
+        if media.nil?
           render json: { status: 'NOT FOUND', message: 'Desired asset_id of
 Media does not exists' }, status: :ok
         else
           render json: { status: 'SUCCESS', message: 'Loaded Media', data:
-@media }, status: :ok
+media }, status: :ok
         end
       end
 
@@ -214,10 +215,10 @@ Media does not exists' }, status: :ok
       }
       )
       def destroy
-        @del_media = Media.find_by_asset_id(params[:id])
-        @del_media.destroy
+        del_media = Media.find_by_asset_id(params[:id])
+        del_media.destroy
         render json: { status: 'SUCCESS', message: 'Deleted media', data:
-@del_media }, status: :ok
+del_media }, status: :ok
       end
 
       # uploads the metadata submitted by user via .csv file
@@ -283,8 +284,8 @@ Audio.duration_tc(hash_value['duration'].to_i)
               hash_value['timecode'] =
 Video.duration_tc(hash_value['duration'].to_i)
             end
-            @metadata = Media.find_by_asset_id(hash_value['asset_id'])
-            if @metadata.update_attributes(hash_value)
+            metadata = Media.find_by_asset_id(hash_value['asset_id'])
+            if metadata.update_attributes(hash_value)
               saved.append(hash_value)
             end
           else

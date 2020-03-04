@@ -1,14 +1,15 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 RSpec.describe Media, type: :model do
   before(:context) do
     @account = FactoryBot.create(:account)
-    byebug
+    # byebug
   end
 
   after(:context) do
     @account.destroy
-    byebug
+    # byebug
   end
 
   context 'validation test' do
