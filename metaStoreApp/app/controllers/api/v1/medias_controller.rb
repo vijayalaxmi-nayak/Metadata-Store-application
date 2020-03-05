@@ -9,6 +9,8 @@ module Api
       param :asset_id, String, desc: 'Asset Id'
       param :title, String, desc: 'Title of the media'
       param :duration, :number, desc: 'Duration of the media in milliseconds'
+      param :from, :number, desc: 'Start duration of media in milliseconds'
+      param :to, :number, desc: 'End duration of media in milliseconds'
       example %(
       Search by asset_id
       GET api/v1/medias?asset_id=AB100
@@ -84,6 +86,39 @@ module Api
       }
       ]
       }
+
+      Search by asset_id, title, from and to of duration, and offset
+      GET api/v1/medias?title=SONG&asset_id=a&from=45&to=100&offset=2
+      {
+      "status": "SUCCESS",
+      "message": "Loaded medias",
+      "data": [
+      {
+        "asset_id": "AO100",
+        "media_type": "audio",
+        "account_id": 1,
+        "title": "song1",
+        "duration": 63,
+        "location": "https://www.youtube.com/watch?v=QojnRc7SS9o",
+        "recorded_time": "0001-02-20T03:10:40.000Z",
+        "timecode": "00:00:00.63",
+        "created_at": "2020-03-04T09:07:17.000Z",
+        "updated_at": "2020-03-05T05:44:33.000Z"
+      },
+      {
+        "asset_id": "AP100",
+        "media_type": "audio",
+        "account_id": 1,
+        "title": "song3",
+        "duration": 79,
+        "location": "https://www.youtube.com/watch?v=pPy0GQJLZUM",
+        "recorded_time": "0001-01-20T11:00:08.000Z",
+        "timecode": "00:00:00.79",
+        "created_at": "2020-03-04T09:07:21.000Z",
+        "updated_at": "2020-03-05T05:44:33.000Z"
+      }
+      ]
+      }
       )
       def index
         medias = Media.where(nil)
@@ -96,6 +131,8 @@ params[:title].present?
         # search by duration
         medias = medias.search_by_duration(params[:duration]) if
 params[:duration].present?
+        # search by duration - from and to
+        medias = medias.search_by_duration_from_and_to(params[:from], params[:to]) if params[:from].present? and params[:to].present?
         # sort by created_at
         medias = medias.order('created_at')
         # applying limit and offset
