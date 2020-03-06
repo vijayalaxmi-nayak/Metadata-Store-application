@@ -4,6 +4,7 @@ require 'rails_helper'
 RSpec.describe Api::V1::MediasController, type: :controller do
   before(:each) do
     @account = FactoryBot.create(:account)
+    #FactoryBot.create_list(:media, 10, account_id: @account.id)
     for i in 60..65 do
       FactoryBot.create(:media, account_id: @account.id, title: i.to_s +
 'xYz', asset_id: i.to_s + 'abc', duration: i)
@@ -16,12 +17,12 @@ RSpec.describe Api::V1::MediasController, type: :controller do
 
   context 'GET #index' do
     it 'should return a success response' do
-     get :index, params: { asset_id: 'ABc', title: 'yz', duration: 62 }
+     get :index, params: { asset_id: 'Bc', title: 'title', duration: 10 }
      expect(response).to be_success
     end
 
     it 'should return a successful json string with message' do
-      get :index, params: { asset_id: 'ABc', title: 'yz', duration: 62 }
+      get :index, params: { asset_id: 'ABc', title: 'yz' }
       expect(response).to be_success
       parsed_response = JSON.parse(response.body)
       expect(parsed_response['message']).to eq('Loaded medias')
