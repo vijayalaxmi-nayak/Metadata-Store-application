@@ -2,8 +2,8 @@
 server '3.135.211.179', port: 3000, roles: [:web, :app, :db], primary: true
 
 set :repo_url,        'https://github.com/vijayalaxmi-nayak/Metadata-Store-application'
-set :application,     'metadata store application'
-set :user,            'vijayalaxmi-nayak'
+set :application,     'metadata_store_application'
+set :user,            'amagi'
 set :puma_threads,    [4, 16]
 set :puma_workers,    0
 
