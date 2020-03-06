@@ -1,5 +1,5 @@
 # Change these
-server '3.135.211.179', port: 3000, roles: [:web, :app, :db], primary: true
+server '10.0.5.116', port: 3000, roles: [:web, :app, :db], primary: true
 
 set :repo_url,        'https://github.com/vijayalaxmi-nayak/Metadata-Store-application'
 set :application,     'metadata_store_application'
